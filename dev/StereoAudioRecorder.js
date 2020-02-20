@@ -401,6 +401,25 @@ function StereoAudioRecorder(mediaStream, config) {
         });
     };
 
+    this.destroy = function() {
+        var disableLogsCache = config.disableLogs;
+
+        config = {
+            disableLogs: true
+        };
+
+        if (Storage.AudioContextConstructor) {
+            Storage.AudioContextConstructor.close();
+            Storage.AudioContextConstructor = null;
+        }
+
+        config.disableLogs = disableLogsCache;
+
+        if (!config.disableLogs) {
+            console.warn('StereoAudioRecorder is destroyed.');
+        }
+    };
+
     if (typeof Storage === 'undefined') {
         var Storage = {
             AudioContextConstructor: null,

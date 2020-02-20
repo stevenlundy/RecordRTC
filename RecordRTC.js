@@ -1,6 +1,6 @@
 'use strict';
 
-// Last time updated: 2019-06-24 7:56:58 AM UTC
+// Last time updated: 2020-02-20 7:05:05 PM UTC
 
 // ________________
 // RecordRTC v5.5.9
@@ -2899,6 +2899,25 @@ function StereoAudioRecorder(mediaStream, config) {
         });
     };
 
+    this.destroy = function() {
+        var disableLogsCache = config.disableLogs;
+
+        config = {
+            disableLogs: true
+        };
+
+        if (Storage.AudioContextConstructor) {
+            Storage.AudioContextConstructor.close();
+            Storage.AudioContextConstructor = null;
+        }
+
+        config.disableLogs = disableLogsCache;
+
+        if (!config.disableLogs) {
+            console.warn('StereoAudioRecorder is destroyed.');
+        }
+    };
+
     if (typeof Storage === 'undefined') {
         var Storage = {
             AudioContextConstructor: null,
@@ -4808,6 +4827,7 @@ function GifRecorder(mediaStream, config) {
         var video = document.createElement('video');
         video.muted = true;
         video.autoplay = true;
+        video.playsInline = true;
 
         isLoadedMetaData = false;
         video.onloadedmetadata = function() {

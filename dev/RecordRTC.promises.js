@@ -184,7 +184,7 @@ function RecordRTCPromisesHandler(mediaStream, options) {
      *     internalRecorder.addStreams([newAudioStream]);
      *     internalRecorder.resetVideoStreams([screenStream]);
      * }
-     * @returns {Object} 
+     * @returns {Object}
      */
     this.getInternalRecorder = function() {
         return new Promise(function(resolve, reject) {
